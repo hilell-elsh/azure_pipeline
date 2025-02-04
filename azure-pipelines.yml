@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+  dotnet_version: "8.0.x"
+
 pool:
   vmImage: ubuntu
   name: default
@@ -15,7 +18,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: 
+    version: $(dotnet_version)
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -25,6 +28,13 @@ steps:
     majorVersion: '1'
     minorVersion: $(Build.SourceBranchName)
     patchVersion: $(Build.BuildNumber)
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: '199dbc09-2375-465c-b64d-796f8d3f742f/87f9bd7b-5e8d-4aca-a1bd-2e3de3a5eaa8'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
