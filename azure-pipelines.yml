@@ -10,6 +10,9 @@ trigger:
     include:
     - '*'
 
+workspace:
+  clean: all
+
 variables:
   dotnet_version: "8.0.x"
 
@@ -19,7 +22,6 @@ pool:
   - Agent.OS -equals Linux
 
 steps:
-
 - task: UseDotNet@2
   displayName: 'Install'
   inputs:
