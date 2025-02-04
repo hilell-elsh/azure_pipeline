@@ -11,8 +11,6 @@ pool:
   name: default
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
 - task: UseDotNet@2
   inputs:
@@ -23,8 +21,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'Build.SourceBranch_Build.SourceVersion'
+    versioningScheme: 'byBuildNumber'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
