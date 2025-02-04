@@ -10,26 +10,32 @@ variables:
   dotnet_version: "8.0.x"
 
 pool:
-  vmImage: ubuntu
   name: default
+  demands:
+  - Agent.OS -equals Linux
 
 steps:
 
 - task: UseDotNet@2
+  displayName: 'Install'
   inputs:
     packageType: 'sdk'
     version: $(dotnet_version)
 
 - task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Pack'
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'byPrereleaseNumber'
-    majorVersion: '1'
-    minorVersion: $(Build.SourceBranchName)
-    patchVersion: $(Build.BuildNumber)
+    versioningScheme: 'byBuildNumber'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Upload Artifact'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
@@ -37,6 +43,5 @@ steps:
     vstsFeed: '199dbc09-2375-465c-b64d-796f8d3f742f/87f9bd7b-5e8d-4aca-a1bd-2e3de3a5eaa8'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    echo End
+  displayName: 'End'
