@@ -3,8 +3,12 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+name: $(Build.SourceBranchName)_$(Rev:rr)
+
 trigger:
-- main
+  branches:
+    include:
+    - '*'
 
 variables:
   dotnet_version: "8.0.x"
@@ -32,7 +36,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'name'
 
 - task: DotNetCoreCLI@2
   displayName: 'Upload Artifact'
