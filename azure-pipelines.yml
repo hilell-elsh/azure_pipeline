@@ -49,5 +49,9 @@ steps:
     publishVstsFeed: '199dbc09-2375-465c-b64d-796f8d3f742f/87f9bd7b-5e8d-4aca-a1bd-2e3de3a5eaa8'
 
 - script: |
+    echo on another branch
+  condition: eq(variables['Build.SourceBranchName'], 'another')
+
+- script: |
     echo End of pipeline
   displayName: 'End'
