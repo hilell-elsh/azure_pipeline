@@ -41,10 +41,10 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Upload Artifact'
   inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
-    feedsToUse: 'select'
-    vstsFeed: '199dbc09-2375-465c-b64d-796f8d3f742f/87f9bd7b-5e8d-4aca-a1bd-2e3de3a5eaa8'
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '199dbc09-2375-465c-b64d-796f8d3f742f/87f9bd7b-5e8d-4aca-a1bd-2e3de3a5eaa8'
 
 - script: |
     echo End
